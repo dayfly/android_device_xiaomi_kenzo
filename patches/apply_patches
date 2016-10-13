@@ -1,0 +1,15 @@
+#!/bin/bash
+
+CD=$PWD
+for i in $(ls *.patch); do
+	pushd ../../../../ >& /dev/null
+	echo "CHECK $i"
+	cat $CD/$i | patch -p1 -s --dry-run
+	rc=$?
+	if [ rc != 0 ]; then
+		echo "patch error $i"
+	else
+		cat $CD/$i | patch -p1 -s
+	fi
+	popd >& /dev/null
+done
