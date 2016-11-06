@@ -165,10 +165,6 @@ on fs
     mkdir /persist/data 0700 system system
     restorecon_recursive /persist
 
-    chown system system  /dev/goodix_fp
-    chmod 0644 /dev/goodix_fp
-
-
 on post-fs
     # Support legacy paths
     symlink /sdcard /mnt/sdcard
@@ -603,13 +599,3 @@ service fingerprintd /system/bin/fingerprintd
     class late_start
     socket fpce stream 0666 system system
     user system
-
-service gx_fpd /system/bin/gx_fpd
-    class late_start
-    user system
-    group system
-    disabled
-
-on property:persist.sys.fp.sensor=goodix
-    start gx_fpd
-
